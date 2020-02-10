@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="85" id="KGk-i7-Jjw" customClass="ResultTableViewCell" customModule="PrimeNumbersGenerator" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="84.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Время начала вычислений" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lUe-NV-bfy">
+                        <rect key="frame" x="16" y="5" width="79" height="74.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="79" id="EnW-jf-dpv"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Количество потоков" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGH-I4-eFs">
+                        <rect key="frame" x="176" y="5" width="43" height="74.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="43" id="4Xz-Ni-B8B"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Затраченное время (в миллисекундах)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="Oi7-FM-2t8">
+                        <rect key="frame" x="227" y="5" width="77" height="75"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="77" id="Gll-eQ-jcf"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Верхний предел" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="zzL-Uf-14b">
+                        <rect key="frame" x="103" y="5" width="65" height="75"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="rjk-RN-09o"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="lUe-NV-bfy" firstAttribute="height" secondItem="zzL-Uf-14b" secondAttribute="height" id="0BF-FM-7Ag"/>
+                    <constraint firstItem="zzL-Uf-14b" firstAttribute="centerY" secondItem="IGH-I4-eFs" secondAttribute="centerY" id="1Lk-IY-agI"/>
+                    <constraint firstItem="zzL-Uf-14b" firstAttribute="leading" secondItem="lUe-NV-bfy" secondAttribute="trailing" constant="8" id="3nS-wP-Qdz"/>
+                    <constraint firstAttribute="trailing" secondItem="Oi7-FM-2t8" secondAttribute="trailing" constant="16" id="7PT-hU-fq0"/>
+                    <constraint firstItem="IGH-I4-eFs" firstAttribute="height" secondItem="Oi7-FM-2t8" secondAttribute="height" id="Bd3-9l-GoC"/>
+                    <constraint firstItem="IGH-I4-eFs" firstAttribute="centerY" secondItem="Oi7-FM-2t8" secondAttribute="centerY" id="C6J-68-IT7"/>
+                    <constraint firstItem="Oi7-FM-2t8" firstAttribute="leading" secondItem="IGH-I4-eFs" secondAttribute="trailing" constant="8" id="Igw-8W-EV0"/>
+                    <constraint firstAttribute="bottom" secondItem="lUe-NV-bfy" secondAttribute="bottom" constant="5" id="Kxa-ab-Ugh"/>
+                    <constraint firstItem="zzL-Uf-14b" firstAttribute="height" secondItem="IGH-I4-eFs" secondAttribute="height" id="SrD-6V-piq"/>
+                    <constraint firstItem="lUe-NV-bfy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="VcD-47-to8"/>
+                    <constraint firstItem="IGH-I4-eFs" firstAttribute="leading" secondItem="zzL-Uf-14b" secondAttribute="trailing" constant="8" id="ZsG-je-jel"/>
+                    <constraint firstItem="lUe-NV-bfy" firstAttribute="centerY" secondItem="zzL-Uf-14b" secondAttribute="centerY" id="flf-zC-c5O"/>
+                    <constraint firstItem="lUe-NV-bfy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="hEm-kF-tNt"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="elapsedTimeLabel" destination="Oi7-FM-2t8" id="UOW-WS-Y5x"/>
+                <outlet property="startDateLabel" destination="lUe-NV-bfy" id="kbm-mA-199"/>
+                <outlet property="threadsCountLabel" destination="IGH-I4-eFs" id="rzH-Li-sVp"/>
+                <outlet property="upperBoundLabel" destination="zzL-Uf-14b" id="sXP-fa-lXJ"/>
+            </connections>
+            <point key="canvasLocation" x="132.80000000000001" y="170.46476761619192"/>
+        </tableViewCell>
+    </objects>
+</document>
