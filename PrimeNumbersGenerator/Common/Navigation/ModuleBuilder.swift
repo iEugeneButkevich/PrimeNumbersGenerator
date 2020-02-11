@@ -2,7 +2,7 @@ import UIKit
 
 protocol ModuleBuilderProtocol {
     func createInitialModule(router: RouterProtocol) -> UIViewController
-    func createResultDetailsModule(result: GenerationResult?) -> UIViewController
+    func createResultDetailsModule(result: GenerationResult) -> UIViewController
 }
 
 class ModuleBuilder: ModuleBuilderProtocol {
@@ -15,9 +15,9 @@ class ModuleBuilder: ModuleBuilderProtocol {
         return view
     }
     
-    func createResultDetailsModule(result: GenerationResult?) -> UIViewController {
+    func createResultDetailsModule(result: GenerationResult) -> UIViewController {
         let view = ResultDetailsViewController()
-        let presenter = ResultDetailsPresenter(view: view, result: result)
+        let presenter = ResultDetailsPresenter(view: view, dataManager: RealmDataManager(), result: result)
         view.presenter = presenter
         
         return view

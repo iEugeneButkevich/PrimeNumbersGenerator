@@ -10,6 +10,7 @@
 		4419EE5723ED569400B9D65A /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4419EE5623ED569400B9D65A /* Utils.swift */; };
 		445A6F4823EDA14A00D0EBE2 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445A6F4723EDA14A00D0EBE2 /* SpinnerView.swift */; };
 		445A6F4A23EDEB1E00D0EBE2 /* ResultDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 445A6F4923EDEB1E00D0EBE2 /* ResultDetailsViewController.xib */; };
+		4460F35223F30A120084B31B /* PrimeNumbersResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4460F35123F30A120084B31B /* PrimeNumbersResult.swift */; };
 		44EB26E223EBE957001CD5E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB26E123EBE957001CD5E7 /* AppDelegate.swift */; };
 		44EB26E923EBE957001CD5E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44EB26E823EBE957001CD5E7 /* Assets.xcassets */; };
 		44EB26EC23EBE957001CD5E7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44EB26EA23EBE957001CD5E7 /* LaunchScreen.storyboard */; };
@@ -39,6 +40,7 @@
 		4419EE5623ED569400B9D65A /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		445A6F4723EDA14A00D0EBE2 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		445A6F4923EDEB1E00D0EBE2 /* ResultDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultDetailsViewController.xib; sourceTree = "<group>"; };
+		4460F35123F30A120084B31B /* PrimeNumbersResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimeNumbersResult.swift; sourceTree = "<group>"; };
 		44EB26DE23EBE957001CD5E7 /* PrimeNumbersGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrimeNumbersGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44EB26E123EBE957001CD5E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44EB26E823EBE957001CD5E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -175,8 +177,9 @@
 		44EB270523EBF5E4001CD5E7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				44EB270623EBF5F7001CD5E7 /* GenerationResult.swift */,
 				44EB271E23EC210E001CD5E7 /* GenerationDataValidator.swift */,
+				44EB270623EBF5F7001CD5E7 /* GenerationResult.swift */,
+				4460F35123F30A120084B31B /* PrimeNumbersResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 				44EB271A23EC1131001CD5E7 /* ResultDetailsPresenter.swift in Sources */,
 				44EB271623EBFB98001CD5E7 /* ResultDetailsViewController.swift in Sources */,
 				44EB270423EBF566001CD5E7 /* GenerationPresenter.swift in Sources */,
+				4460F35223F30A120084B31B /* PrimeNumbersResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

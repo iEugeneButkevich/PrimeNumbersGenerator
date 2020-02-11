@@ -1,10 +1,12 @@
 import UIKit
 
 protocol ResultDetailsViewProtocol: class {
-    func showInfoFor(result: GenerationResult?)
+    func showText(text: String)
+    func showSpinner()
+    func hideSpinner()
 }
 
-class ResultDetailsViewController: UIViewController {
+class ResultDetailsViewController: LoadingViewController {
     
     var presenter: ResultDetailsPresenterProtocol!
     
@@ -20,11 +22,15 @@ class ResultDetailsViewController: UIViewController {
 }
 
 extension ResultDetailsViewController: ResultDetailsViewProtocol {
-    func showInfoFor(result: GenerationResult?) {
-        if let resultString = result?.generatedNumbers.map({ String($0) }).joined(separator: ",") {
-            generatedNumberTextView.text = "[" + resultString + "]"
-        } else {
-            generatedNumberTextView.text = "[]"
-        }
+    func showText(text: String) {
+        generatedNumberTextView.text = text
+    }
+    
+    func showSpinner() {
+        showActivityIndicator()
+    }
+    
+    func hideSpinner() {
+        hideActivityIndicator()
     }
 }

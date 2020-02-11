@@ -9,7 +9,7 @@ protocol BaseRouter {
 
 protocol RouterProtocol: BaseRouter {
     func setInitialViewController()
-    func showDetail(result: GenerationResult?)
+    func showDetail(result: GenerationResult)
 }
 
 class Router: RouterProtocol {
@@ -30,7 +30,7 @@ class Router: RouterProtocol {
         navigationController.viewControllers = [initialViewController]
     }
     
-    func showDetail(result: GenerationResult?) {
+    func showDetail(result: GenerationResult) {
         guard let navigationController = navigationController,
             let resultDetailsViewController = moduleBuilder?.createResultDetailsModule(result: result) else { return }
         

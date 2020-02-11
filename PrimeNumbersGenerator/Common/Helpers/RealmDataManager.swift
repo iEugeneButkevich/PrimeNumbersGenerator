@@ -3,10 +3,13 @@ import RealmSwift
 
 protocol DataManagerProtocol {
     func loadGenerationResults(completion:@escaping ([GenerationResult]?) -> Void)
-    func loadGeneratedNumbersFor(upperBound: Int, completion:@escaping (_ upperBound:Int?, _ generatedNumbers:[Int]?) -> Void)
+    func loadGeneratedNumbersFor(upperBound: Int, completion:@escaping (_ generatedNumbers:[Int]?) -> Void)
     func save(result: GenerationResult)
     func update(result: GenerationResult, with elapsedTime: Double)
     func clearResults()
+    
+    func loadMaxUpperBound(completion:@escaping (_ upperBound:Int?) -> Void)
+    func updateGeneratedNumbersResultWith(newGeneratedNumbers: [Int], maxUpperBound: Int)
 }
 
 class RealmDataManager: DataManagerProtocol {
@@ -37,31 +40,50 @@ class RealmDataManager: DataManagerProtocol {
         }
     }
     
-    func loadGeneratedNumbersFor(upperBound: Int, completion:@escaping (_ upperBound:Int?, _ generatedNumbers:[Int]?) -> Void) {
+    func loadGeneratedNumbersFor(upperBound: Int, completion:@escaping (_ generatedNumbers:[Int]?) -> Void) {
         concurrentQueue.async {
             let realm = try! Realm(configuration: .defaultConfiguration)
             
-            if let result = realm.objects(GenerationResult.self).sorted(byKeyPath: #keyPath(GenerationResult.upperBoundNumber), ascending: false).first {
-                
-                let generatedNumbers = Array(result.generatedNumbers.filter( { $0 < upperBound }))
-                
-                let resultRef = ThreadSafeReference(to: result)
+            if let generatedNumbers = realm.objects(GeneratedNumbersResult.self).first?.generatedNumbers.filter( { $0 < upperBound }) {
+                let resultArray = Array(generatedNumbers)
 
                 DispatchQueue.main.async {
-                    let realm = try! Realm()
-                    
-                    guard let resultInMain = realm.resolve(resultRef) else {
-                        completion(nil, nil)
-                        return
-                    }
-                    
-                    completion(resultInMain.upperBoundNumber, generatedNumbers)
+                    completion(resultArray)
                 }
             } else {
                 DispatchQueue.main.async {
-                    completion(nil, nil)
+                    completion(nil)
                 }
             }
+        }
+    }
+    
+    func loadMaxUpperBound(completion:@escaping (_ upperBound:Int?) -> Void) {
+        let realm = try! Realm(configuration: .defaultConfiguration)
+        
+        if let maxUpperBoundNumber = realm.objects(GeneratedNumbersResult.self).first?.maxUpperBoundNumber {
+            completion(maxUpperBoundNumber)
+        } else {
+            completion(nil)
+        }
+    }
+    
+    func updateGeneratedNumbersResultWith(newGeneratedNumbers: [Int], maxUpperBound: Int) {
+        let realm = try! Realm(configuration: .defaultConfiguration)
+        
+        var generatedNumbersResult: GeneratedNumbersResult! = realm.objects(GeneratedNumbersResult.self).first
+        
+        if  generatedNumbersResult == nil {
+            generatedNumbersResult = GeneratedNumbersResult()
+        }
+
+        try! realm.write {
+            generatedNumbersResult.maxUpperBoundNumber = maxUpperBound
+            
+            for newGeneratedNumber in newGeneratedNumbers {
+                generatedNumbersResult.generatedNumbers.append(newGeneratedNumber)
+            }
+            realm.add(generatedNumbersResult, update: .modified)
         }
     }
     

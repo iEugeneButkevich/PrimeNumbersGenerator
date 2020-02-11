@@ -24,12 +24,9 @@ class GenerationViewController: LoadingViewController {
         tableView.register(ResultTableViewCell.nib(), forCellReuseIdentifier: ResultTableViewCell.identifier())
         
         tableView.tableHeaderView = ResultTableViewCell.initAsHeader()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
         presenter.loadResults()
+
     }
     
     @IBAction func generateAction(_ sender: UIButton) {

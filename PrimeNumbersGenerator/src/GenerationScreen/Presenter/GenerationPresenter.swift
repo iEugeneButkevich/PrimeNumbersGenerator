@@ -6,7 +6,7 @@ protocol GenerationPresenterProtocol: class {
     func loadResults()
     func generateNumbersFor(upperBoundText: String?, threadsCountText: String?)
     func clearResults()
-    func showDetails(result: GenerationResult?)
+    func showDetails(result: GenerationResult)
 }
 
 class GenerationPresenter: GenerationPresenterProtocol {
@@ -27,6 +27,7 @@ class GenerationPresenter: GenerationPresenterProtocol {
     }
     
     func loadResults() {
+        view?.showSpinner()
         dataManager.loadGenerationResults(completion: { results in
             self.results = results
             self.view?.update()
@@ -47,23 +48,21 @@ class GenerationPresenter: GenerationPresenterProtocol {
             let upperBound = Int(upperBoundText!)!
             let threadsCount = Int(threadsCountText!)!
             
-            dataManager.loadGeneratedNumbersFor(upperBound: upperBound) { loadedUpperNumber, loadedNumbers in
+            dataManager.loadMaxUpperBound { loadedMaxUpperBound in
                 var lowerBoundForGeneration = 0
-                if let loadedUpperNumber = loadedUpperNumber, loadedUpperNumber > 1 {
-                    lowerBoundForGeneration = loadedUpperNumber
+                if let loadedMaxUpperBound = loadedMaxUpperBound, loadedMaxUpperBound > 1 {
+                    lowerBoundForGeneration = loadedMaxUpperBound
                 }
                 
-                var generatedNumbers = loadedNumbers ?? [Int]()
-                
-                self.numbersGenerator.generateNumbersFor(lowerBound: lowerBoundForGeneration, upperBound: upperBound, threadsCount: threadsCount) { numbers in
-                    if let numbers = numbers {
-                        generatedNumbers = generatedNumbers + numbers
+                self.numbersGenerator.generateNumbersFor(lowerBound: lowerBoundForGeneration, upperBound: upperBound, threadsCount: threadsCount) { newNumbers in
+                    if let newNumbers = newNumbers {
+                        self.dataManager.updateGeneratedNumbersResultWith(newGeneratedNumbers: newNumbers, maxUpperBound: upperBound)
                     }
                     
                     let elapsedTimeBeforeSavingToDB = Double((DispatchTime.now().uptimeNanoseconds - initialTime.uptimeNanoseconds)) / 1_000_000 // в миллисекундах
                     
                     let generationResult = GenerationResult()
-                    generationResult.fillWith(upperBoundNumber: upperBound, threadsCount: threadsCount, generatedNumbers: generatedNumbers, startDate: startDate, elapsedTime: elapsedTimeBeforeSavingToDB)
+                    generationResult.fillWith(upperBoundNumber: upperBound, threadsCount: threadsCount, startDate: startDate, elapsedTime: elapsedTimeBeforeSavingToDB)
                     
                     self.dataManager.save(result: generationResult)
                     
@@ -87,7 +86,7 @@ class GenerationPresenter: GenerationPresenterProtocol {
         loadResults()
     }
     
-    func showDetails(result: GenerationResult?) {
+    func showDetails(result: GenerationResult) {
         router?.showDetail(result: result)
     }
 }
