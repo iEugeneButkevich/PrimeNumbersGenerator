@@ -15,33 +15,33 @@ class PrimeNumbersGenerator: NumbersGeneratorProtocol {
         }
         
         Thread.detachNewThread {
-            var resultPrimes = Array(repeating: true, count: upperBound - lowerBound)
-
-            let sqrtOfUpperBound = Int(sqrt(Double(upperBound)))
+            var resultPrimes = [Int]()
             
+            let sqrtOfUpperBound = Int(sqrt(Double(upperBound)))
+
             // Находим простые числа до корня из UpperBound
             let sqrtPrimes = self.primeNumbersFor(n: sqrtOfUpperBound)
-
+            
             if threadsCount > 1 && threadsCount < upperBound - lowerBound {
                 let numbersCountInRangeForGeneration = (upperBound - lowerBound) / (threadsCount - 1)
-
+                
                 let lock = NSLock()
                 let dispatchGroup = DispatchGroup()
-
+                
+                var threadsPrimeNumbers = [[Int]]()
+                
                 for i in 1...threadsCount - 1 {
                     dispatchGroup.enter()
                     
                     let lowerBoundForThread = lowerBound + (i - 1)*numbersCountInRangeForGeneration
-                    let upperBoundForThread = i == threadsCount - 1 ? upperBound - 1 : lowerBoundForThread + numbersCountInRangeForGeneration
-                    
-                    var threadPrimeNumbers = [Bool]()
+                    let upperBoundForThread = i == threadsCount - 1 ? upperBound - 1 : lowerBoundForThread + numbersCountInRangeForGeneration - 1
                     
                     Thread.detachNewThread {
-                        threadPrimeNumbers = self.primeNumbers(from: lowerBoundForThread, to: upperBoundForThread, sqrtPrimes: sqrtPrimes)
+                        let threadPrimeNumbers = self.primeNumbers(from: lowerBoundForThread, to: upperBoundForThread, sqrtPrimes: sqrtPrimes)
                         
                         lock.lock()
-                        for index in threadPrimeNumbers.indices {
-                            resultPrimes[index+lowerBoundForThread-lowerBound] = threadPrimeNumbers[index]
+                        if !threadPrimeNumbers.isEmpty {
+                            threadsPrimeNumbers.append(threadPrimeNumbers)
                         }
                         lock.unlock()
                         
@@ -51,13 +51,18 @@ class PrimeNumbersGenerator: NumbersGeneratorProtocol {
                 
                 dispatchGroup.wait()
                 
+                threadsPrimeNumbers = threadsPrimeNumbers.sorted { $0[0] < $1[0] }
+                for primes in threadsPrimeNumbers {
+                    resultPrimes = resultPrimes + primes
+                }
+                
                 DispatchQueue.main.async {
-                    completion((lowerBound...upperBound - 1).filter{resultPrimes[$0 - lowerBound]})
+                    completion(resultPrimes)
                 }
             } else {
                 resultPrimes = self.primeNumbers(from: lowerBound, to: upperBound - 1, sqrtPrimes: sqrtPrimes)
                 DispatchQueue.main.async {
-                    completion((lowerBound...upperBound - 1).filter{resultPrimes[$0 - lowerBound]})
+                    completion(resultPrimes)
                 }
             }
         }
@@ -89,7 +94,7 @@ class PrimeNumbersGenerator: NumbersGeneratorProtocol {
         return primes
     }
     
-    private func primeNumbers(from lowerBound: Int, to upperBound: Int, sqrtPrimes:[Int]) -> [Bool] {
+    private func primeNumbers(from lowerBound: Int, to upperBound: Int, sqrtPrimes:[Int]) -> [Int] {
         var secondarySieve = Array(repeating: true, count: upperBound - lowerBound + 1)
         
         if lowerBound == 0 {
@@ -111,7 +116,9 @@ class PrimeNumbersGenerator: NumbersGeneratorProtocol {
             }
         }
         
-        return secondarySieve
+        let primes = (lowerBound...upperBound).filter{secondarySieve[$0 - lowerBound]}
+        
+        return primes
     }
 }
 
