@@ -52,9 +52,7 @@ class PrimeNumbersGenerator: NumbersGeneratorProtocol {
                 dispatchGroup.wait()
                 
                 threadsPrimeNumbers = threadsPrimeNumbers.sorted { $0[0] < $1[0] }
-                for primes in threadsPrimeNumbers {
-                    resultPrimes = resultPrimes + primes
-                }
+                resultPrimes = threadsPrimeNumbers.flatMap( {$0} )
                 
                 DispatchQueue.main.async {
                     completion(resultPrimes)
